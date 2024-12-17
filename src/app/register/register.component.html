@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center align-items-center " style="min-height: 100vh;">
+    <div class="row">
+        <div class="col-lg-6">
+            <form [formGroup]="registerForm" (ngSubmit)="register()" class="p-5  border rounded-4 shadow">
+                <div class="mb-3">
+                    <h1> <i class="fa-solid fa-graduation-cap"></i> Cookpedia</h1>
+                    <input placeholder="Username" name="username" formControlName="username" type="text"
+                        class="form-control mt-5" id="exampleInputEmail" aria-describedby="emailHelp">
+                        @if (registerForm.get('username')?.errors && registerForm.get('username')?.touched ) {
+                            <div class="text-danger fw-bolder">*Invalid Username</div>
+                        }
+                    <input placeholder="E Mail" name="email" formControlName="email" type="email"
+                        class="form-control mt-3" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        @if (registerForm.get('email')?.errors && registerForm.get('email')?.touched ) {
+                            <div class="text-danger fw-bolder">*Invalid Email</div>
+                        }
+                </div>
+                <div class="mb-3">
+                    <input placeholder="Password" name="password" formControlName="password" type="password"
+                        class="form-control" id="exampleInputPassword1">
+                        @if (registerForm.get('password')?.errors && registerForm.get('password')?.touched ) {
+                            <div class="text-danger fw-bolder">*Invalid Password</div>
+                        }
+                </div>
+                <button  type="submit" class="btn btn-success px-3 w-100" routerLink="list">Register</button>
+            </form>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 mt-2">
+            <h1>Create New Account</h1>
+            <p class="fw-bolder">What tou will get?</p>
+            <ul class="mt-5">
+                <li>Different Recipes</li>
+                <li>Easy Way to Make Recipe</li>
+                <li>Save Your Favorites Recipes</li>
+                <li>Download Your Recipes</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
