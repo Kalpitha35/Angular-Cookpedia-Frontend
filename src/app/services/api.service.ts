@@ -7,7 +7,8 @@ import { RecipeModel } from '../admin/model/recipeModel';
 })
 export class ApiService {
 
-  server_url = "http://localhost:4001"
+  //server_url = "http://localhost:4001"
+  server_url = "https://angular-cookpedia-server.onrender.com"
 
   constructor(private http:HttpClient) { }
 
@@ -123,6 +124,43 @@ updateRecipeAPI(id:string,reqBody:RecipeModel){
 // recipes/:id/remove
 deleteRecipeAPI(id:string){
   return this.http.delete(`${this.server_url}/recipes/${id}/remove`,this.appendToken())
+ }
+
+ // getChartData
+ getChartData(){
+  this.allDownloadListAPI().subscribe((res:any)=>{
+    
+    console.log(res);
+    // code extracting cuisine and its total download count as object and added to an array.
+    // input : [  {recipeCuisine,count}   ]"
+    // output : [   {name:recipeCuisine,y:totalCount}  ]
+
+    //algorithm
+    // 1. create an empty array for utput, object for storing each array item
+    // 2. get each array item of res and store its recipeCuisine & count to a variable
+    // 3. check recipeCuisine is available in output object, if present then set the value of recipeCuisine key as total existing recipeCuisine value with nre count, not present then insert recipeCuisine as key and value as its count
+    
+    // 4. push each key from output object into output array
+
+    let downloadArrayList:any = []
+    let output:any = {}
+    res.forEach((item:any)=>{
+      // item = {recipeCuisine: "Mexican", count:4}
+      let cuisine = item.recipeCuisine // cuisine = "Mexican"
+      let currentCount = item.count // currentCount = 4
+      if(output.hasOwnProperty(cuisine)){
+        output[cuisine] += currentCount
+      }else{
+        output[cuisine] = currentCount // output = {Mexican:4}
+      }
+    })
+    console.log(output);
+    for(let cuisine in output){
+      downloadArrayList.push({name:cuisine,y:output[cuisine]})
+    }
+    console.log(downloadArrayList);
+    localStorage.setItem("chart",JSON.stringify(downloadArrayList))
+  })
  }
 
 }

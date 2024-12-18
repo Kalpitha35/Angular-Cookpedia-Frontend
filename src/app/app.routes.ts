@@ -10,11 +10,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { SavedRecipeComponent } from './saved-recipe/saved-recipe.component';
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 import { PnfComponent } from './pnf/pnf.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    //lazy loaded admin module : http://localhost:4200/admin
+    //lazy loaded admin module : http://localhost:4200/admin : authorised
     {
-        path:'admin', loadChildren:()=>import('./admin/admin.module').then(m=>m.AdminModule)
+        path:'admin',canActivate:[authGuard], loadChildren:()=>import('./admin/admin.module').then(m=>m.AdminModule)
     },
     {
         // http://localhost:4200/
@@ -41,16 +42,16 @@ export const routes: Routes = [
         path:"all-recipes",component:RecipesComponent,title:"All Recipes"
     },
     {
-        // http://localhost:4200/profile
-        path:"profile",component:ProfileComponent,title:"Profile"
+        // http://localhost:4200/profile : authorised
+        path:"profile",canActivate:[authGuard],component:ProfileComponent,title:"Profile"
     },
     {
-        // http://localhost:4200/save-recipe
-        path:"save-recipe",component:SavedRecipeComponent,title:"Save Recipe"
+        // http://localhost:4200/save-recipe : authorised
+        path:"save-recipe",canActivate:[authGuard],component:SavedRecipeComponent,title:"Save Recipe"
     },
     {
-        // http://localhost:4200/recipe/id/view
-        path:"recipe/:id/view",component:ViewRecipeComponent,title:"View Recipe"
+        // http://localhost:4200/recipe/id/view : authorised
+        path:"recipe/:id/view",canActivate:[authGuard],component:ViewRecipeComponent,title:"View Recipe"
     },
     {
         // http://localhost:4200/
